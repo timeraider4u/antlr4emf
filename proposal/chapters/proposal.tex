@@ -1,3 +1,47 @@
 % !TeX encoding = UTF-8
 % !TeX spellcheck = en_US
 
+Software developers and engineers often have to deal with 
+modernization of legacy code
+as part of the maintenance 
+life cycle phase for software products. 
+MDE (Model-driven engineering) promises to support software
+builders with approaches, models, tools and processes to 
+simplify this task by using automation.
+The scientific term for
+migration of software with the help of MDE 
+is called 
+''Model-Driven Software
+Modernization'' (MDSM)\cite{Kowalczyk2009model}.
+When the source of an application should be converted from 
+one programming language to another, e.g. from Delphi to Java,
+it is first necessary to import the existing code from text files
+into a model which has a meta-model of the input 
+programming language.
+This first step is called Text-to-Model (T2M).
+There exist domain-specific language (DSL) tools
+which can be used or extended for simpler general-purpose
+programming languages.
+But when it comes to dealing with complex grammars, these tools
+reach their limits. 
+In \cite{Izquierdo2014extracting},
+the authors discuss the existing problems, evaluate various existing
+approaches and propose a new language to bridge the gap between
+grammar-ware and Model-Driven Development (MDD).
+\\ \ \\
+But why invent another language. 
+Is it really necessary?
+With the advent of compiler-generators,
+Yacc/Bison\cite{Bison},
+JavaCC, 
+Coco/R\cite{COCOR} and 
+ANTLR\cite{Antlr}
+for example,
+it has gotten easier then ever to describe 
+grammars in an explicit, programmatic form.
+Collections of grammar files for different
+programming languages, like \cite{Grammarzoo} and 
+\cite{grammars_v4}, have arisen.
+Wouldn't it be nice if they could just be used,
+as they are, for
+T2M projects?
