@@ -1,0 +1,56 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+\section{Existing T2M software - the good, the bad and the ugly}
+
+Before exploring the requirements of this project, it will be a good idea to 
+take a deeper look on the existing software with its advantages and 
+problems. This will make the project scope and the requirements of this
+proposal much clearer.
+As the Eclipse Modeling Framework (EMF) with its Ecore meta-model is
+a de-facto standard, only Eclipse plug-in projects will be described in this
+section.
+
+\subsection{EMFText}
+''EMFText is a tool for defining textual syntax for Ecore-based metamodels''
+\cite{Heidenreich2011model}.
+It can be used for creating DSLs or parsing of GPLs, like Java in the Jamopp project
+\cite{Heidenreich2009closing}.
+EMFText uses ANTLR in version three under the hood.
+Although it is built on top of it, ANTLR grammars can not be used one-to-one.
+Instead, a dedicated DSL is used for the mapping of grammar elements to Ecore
+elements.
+It does not generate any
+meta-model on itself but requires the users to provide it with one by themselves.
+\\ \ \\
+EMFText does not support ANTLR version 4 yet \cite{ANTLR4_EMFText}.
+
+\subsection{Xtext}
+Xtext\cite{Bettini2013implementing} is another project built on top of ANTLR version three.
+It uses its own DSL for parsing of grammar elements and mapping them to meta-model elements.
+One advantage of Xtext compared to EMFText is that it can generate an Ecore model automatically
+based on these DSL description files. But it is also possible to re-use an existing meta-model
+and just specify the parsing structure and the mapping. Xtext uses a dialect of ANTLR 3 but does 
+not support all ANTLR3 language features (e.g., semantic predicates, which are needed
+by C/C++ in ANTLR3, are not available).
+\\ \ \\
+Xtext does not support ANTLR version 4 yet \cite{ANTLR4_XText} and it is questionable
+if it will ever support version four.
+Xtext also does not use the latest release of the version three
+branch, ANTLR 3.5, either. 
+
+\subsection{Summary}
+To summarize, both tools do not support ANTLR version 4.
+The previous branch API version three is now not maintained anymore and
+does not receive any updates upstream. 
+Version 4 has the advantage that it uses another parsing algorithm and,
+therefore, does not require syntactic or semantic predicates anymore
+\cite{Parr2013definitive}\cite{parr1994adding}\cite{Parr2011ll}
+(which are necessary for parsing of GPLs like C/C++ otherwise).
+ANTLRv4 has the advantages that, first, there exists an awesome 
+collection of grammar specifications for this version already at 
+\cite{grammars_v4} on GitHub which seems to have
+an active user and developer community. 
+And, second, ANTLRv4 does provide a better separation of concerns
+between grammar specifications and processing of parse-trees
+by automatically generating visitor and listeners classes.
+
