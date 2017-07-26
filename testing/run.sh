@@ -38,6 +38,9 @@ function generateAndCompile() {
 
 function runExamples() {
 	local INPUT=""
+	if [ -f "Main.java" ]; then
+		java -cp "${CP}" "Main"
+	fi
 	if [[ "${EXAMPLE_DIR}" == "complex-example" ]]; then
 		:
 	elif [[ "${EXAMPLE_DIR}" == "example-left-recursion-1" ]]; then
