@@ -6,7 +6,12 @@ function die() {
 }
 
 function printUsage() {
-	die "Usage: run.sh ( example-left-recursion-1 | example-left-recursion-2 | complex-example )"
+	local USAGE="Usage: run.sh ("
+	USAGE="${USAGE} example-left-recursion-1"
+	USAGE="${USAGE} | example-left-recursion-2"
+	USAGE="${USAGE} | complex-example"
+	USAGE="${USAGE} ) [no-cleanup]"
+	die "${USAGE}"
 }
 
 function selectExampleDir() {
@@ -20,6 +25,15 @@ function selectExampleDir() {
 	else
 		printUsage
 	fi
+	cd "${EXAMPLE_DIR}"
+	CURR_DIR=$(pwd)
+}
+
+function generateAndCompile() {
+	CP="${CURR_DIR}/../lib/antlr4-4.5.4-SNAPSHOT.jar:${CURR_DIR}"
+	rm -rf *.log
+	java -cp "${CP}" org.antlr.v4.Tool -Xlog "${GRAMMAR_FILE}" || die "could not parse g4"
+	javac -cp "${CP}" *.java || die "could not compile"
 }
 
 function runExamples() {
@@ -40,19 +54,27 @@ function runExamples() {
 	fi
 }
 
-if [ $# -ne 1 ]; then
+function cleanUp() {
+	rm -f *.class || die "could not clean-up bin output files"
+	if [ ${CLEAN_UP_SRC_GEN_FILES} -eq 0 ]; then
+		rm -f *.tokens || die "could not clean-up token files"
+		find . -name "*.java" ! -name "Main.java" -exec rm {} \; \
+			|| die "could not clean-up src-gen files"
+	fi
+}
+
+if [ $# -eq 1 ]; then
+	CLEAN_UP_SRC_GEN_FILES=0
+elif [ $# -eq 2 ] && [ "${2}" == "no-cleanup" ]; then
+		CLEAN_UP_SRC_GEN_FILES=1
+else
 	printUsage
 fi
+
 selectExampleDir "${1}"
 
-cd "${EXAMPLE_DIR}"
-CURR_DIR=$(pwd)
-
-CP="${CURR_DIR}/../lib/antlr4-4.5.4-SNAPSHOT.jar:${CURR_DIR}"
-rm -rf *.log
-java -cp "${CP}" org.antlr.v4.Tool -Xlog "${GRAMMAR_FILE}" || die "could not parse g4"
-javac -cp "${CP}" *.java || die "could not compile"
+generateAndCompile
 
 runExamples
 
-rm -f *.{class,java,tokens} || die "could not clean-up"
+cleanUp
