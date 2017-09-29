@@ -10,6 +10,7 @@ function printUsage() {
 	USAGE="${USAGE} example-left-recursion-1"
 	USAGE="${USAGE} | example-left-recursion-2"
 	USAGE="${USAGE} | complex-example"
+	USAGE="${USAGE} | pitfall-1"
 	USAGE="${USAGE} ) [no-cleanup]"
 	die "${USAGE}"
 }
@@ -22,6 +23,8 @@ function selectExampleDir() {
 		GRAMMAR_FILE="Test.g4"
 	elif [[ "${EXAMPLE_DIR}" == "example-left-recursion-2" ]]; then
 		GRAMMAR_FILE="Lefty.g4"
+	elif [[ "${EXAMPLE_DIR}" == "pitfall-1" ]]; then
+		GRAMMAR_FILE="Test.g4"
 	else
 		printUsage
 	fi
@@ -32,7 +35,9 @@ function selectExampleDir() {
 function generateAndCompile() {
 	CP="${CURR_DIR}/../lib/antlr4-4.5.4-SNAPSHOT.jar:${CURR_DIR}"
 	rm -rf *.log
-	java -cp "${CP}" org.antlr.v4.Tool -Xlog "${GRAMMAR_FILE}" || die "could not parse g4"
+	java -cp "${CP}" org.antlr.v4.Tool \
+		-visitor -listener \
+		-Xlog "${GRAMMAR_FILE}" || die "could not parse g4"
 	javac -cp "${CP}" *.java || die "could not compile"
 }
 
@@ -54,6 +59,8 @@ function runExamples() {
 		#java -cp "${CP}" org.antlr.v4.gui.TestRig Lefty lefty -gui "${INPUT}" || die
 		INPUT="${CURR_DIR}/Lefty-0004.lefty"
 		java -cp "${CP}" org.antlr.v4.gui.TestRig Lefty lefty -gui "${INPUT}" || die
+	elif [[ "${EXAMPLE_DIR}" == "pitfall-1" ]]; then
+		:
 	fi
 }
 
