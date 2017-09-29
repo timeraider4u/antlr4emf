@@ -1,0 +1,17 @@
+# Stdout console output when executing Java program:
+
+new line found with id='MAIN'
+	found A='publicstatic'
+		children='[public, static]'
+		children.size()='2'
+		children('0'): toString='[public, static]', class='class org.antlr.v4.runtime.tree.TerminalNodeImpl', text='public', childCount='0'
+		children('1'): toString='[public, static]', class='class org.antlr.v4.runtime.tree.TerminalNodeImpl', text='static', childCount='0'
+		alt-nr='0'
+new line found with id='PRINT'
+	found A='staticpublic'
+		children='[static, public]'
+		children.size()='2'
+		children('0'): toString='[static, public]', class='class org.antlr.v4.runtime.tree.TerminalNodeImpl', text='static', childCount='0'
+		children('1'): toString='[static, public]', class='class org.antlr.v4.runtime.tree.TerminalNodeImpl', text='public', childCount='0'
+		alt-nr='0'
+
