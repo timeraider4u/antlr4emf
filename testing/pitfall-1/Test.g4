@@ -5,7 +5,7 @@ unit:
 ;
 
 line:
-	a Semi
+	a Identifier Semi
 ;
 
 a:
@@ -18,3 +18,19 @@ Semi: ';';
 
 Kw_public: 'public';
 Kw_static: 'static';
+
+Identifier
+	:	[A-Z]+
+	;
+
+Whitespace
+	:	[ \t]+
+		-> skip
+	;
+
+Newline
+	:	(   '\r' '\n'?
+		|   '\n'
+		)
+		-> skip
+	;
