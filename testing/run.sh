@@ -10,6 +10,7 @@ function printUsage() {
 	USAGE="${USAGE} example-left-recursion-1"
 	USAGE="${USAGE} | example-left-recursion-2"
 	USAGE="${USAGE} | complex-example"
+	USAGE="${USAGE} | groups"
 	USAGE="${USAGE} | pitfall-1"
 	USAGE="${USAGE} ) [no-cleanup]"
 	die "${USAGE}"
@@ -23,6 +24,8 @@ function selectExampleDir() {
 		GRAMMAR_FILE="Test.g4"
 	elif [[ "${EXAMPLE_DIR}" == "example-left-recursion-2" ]]; then
 		GRAMMAR_FILE="Lefty.g4"
+	elif [[ "${EXAMPLE_DIR}" == "groups" ]]; then
+		GRAMMAR_FILE="Test.g4"
 	elif [[ "${EXAMPLE_DIR}" == "pitfall-1" ]]; then
 		GRAMMAR_FILE="Test.g4"
 	else
@@ -59,6 +62,9 @@ function runExamples() {
 		#java -cp "${CP}" org.antlr.v4.gui.TestRig Lefty lefty -gui "${INPUT}" || die
 		INPUT="${CURR_DIR}/Lefty-0004.lefty"
 		java -cp "${CP}" org.antlr.v4.gui.TestRig Lefty lefty -gui "${INPUT}" || die
+	elif [[ "${EXAMPLE_DIR}" == "groups" ]]; then
+		INPUT="${CURR_DIR}/Test-0001.test"
+		java -cp "${CP}" org.antlr.v4.gui.TestRig Test test -gui "${INPUT}" || die
 	elif [[ "${EXAMPLE_DIR}" == "pitfall-1" ]]; then
 		:
 	fi
