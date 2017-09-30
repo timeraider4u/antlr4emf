@@ -20,7 +20,7 @@ Kw_public: 'public';
 Kw_static: 'static';
 
 Identifier
-	:	[A-Z]+
+	:	[A-Za-z]+
 	;
 
 Whitespace
