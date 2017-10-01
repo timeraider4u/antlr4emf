@@ -1,0 +1,6 @@
+The files in this directory are written in pseudo-code.
+They are just here because at some point in time I will convert them into 
+unit-tests...
+
+
+so that I do not forget them...
