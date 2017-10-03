@@ -14,6 +14,7 @@ See `testing/pitfall-1/Main.java:47-54`
 
 More notes:
 No, not really, not yet!
+See also https://stackoverflow.com/questions/22002799/antlr4-how-to-know-which-alternative-is-chosen-given-a-context
 Problem is the following:
 if we have `unit: A (b c d | b c e)` we can go through the children of `unit`
 in a visitor class in `visitUnit(Pitfall1Parser.UnitContext ctx)`
